@@ -140,8 +140,6 @@ class App{
         let inpCode = document.getElementById('insertCodeSearch');
         let code = inpCode.value;
         let searchProduct = this.inventory.search(code);
-        console.log(searchProduct);
-        console.log(searchProduct.infoHtml());
 
         if(!code){
             this.actions.innerHTML = "";
