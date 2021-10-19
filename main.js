@@ -9,6 +9,7 @@ class App{
         this.btnSrch = document.getElementById('btnSrch');
         this.btnList = document.getElementById('btnList');
         this.btnListInver = document.getElementById('btnListInverse');
+        this.btnPosition = document.getElementById('btnPosition')
 
         this.actions = document.getElementById('actions')
 
@@ -17,6 +18,7 @@ class App{
         this.btnList.addEventListener('click', this.listProducts);
         this.btnListInver.addEventListener('click', this.listInverse);
         this.btnSrch.addEventListener('click', this.searchProduct);
+        this.btnPosition.addEventListener('click', this.insertProduct);
     }
 
     addProduct = () => {
@@ -36,6 +38,28 @@ class App{
 
         this.actions.innerHTML = "";
         return this.actions.innerHTML = `Se agrego nuevo producto. El producto ${product.getCode()} fue registrado con éxito.`;
+    }
+
+    insertProduct = () => {
+        let product = this._createProduct();
+        let inpPosition = document.getElementById('position');
+        let position = inpPosition.value;
+        inpPosition.value = "";
+
+        if(!product && !position || product && !position || !product && position){
+            this.actions.innerHTML = "";
+            return this.actions.innerHTML += 'No se registró el producto. Todos los campos son requeridos.';
+        }
+
+        let insertProduct = this.inventory.insert(product, position);
+
+        if(!insertProduct){
+            this.actions.innerHTML = "";
+            return this.actions.innerHTML = "No se registró el producto.";
+        }
+
+        this.actions.innerHTML = "";
+        return this.actions.innerHTML = `Se agrego nuevo producto. El producto ${product.getCode()} fue registrado con éxito en la posición ${position}.`;
     }
 
     deleteProduct = () => {
